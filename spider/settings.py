@@ -14,7 +14,10 @@ BOT_NAME = 'spider'
 SPIDER_MODULES = ['spider.spiders']
 NEWSPIDER_MODULE = 'spider.spiders'
 COOKIES_ENABLES=False
-ITEM_PIPELINES = {'spider.pipelines.SpiderPipeline': 300}
+ITEM_PIPELINES = {
+    'spider.pipelines.SpiderPipeline': 300,
+    'scrapy_redis.pipelines.RedisPipeline': 300
+}
 
 # ES configuration
 ES_HOST = "localhost:9200"
@@ -31,6 +34,14 @@ DOWNLOAD_DELAY=10
 TIME_DELTA = 30
 # how many feeds can fetch from a item
 FEED_LIMIT = 300000
+
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_PERSIST = True
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
+SCHEDULER_IDLE_BEFORE_CLOSE = 10
+# Specify the host and port to use when connecting to Redis (optional).
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
 
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
