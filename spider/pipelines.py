@@ -14,7 +14,6 @@ class SpiderPipeline(object):
         self.es = Elasticsearch(settings.ES_HOST)
 
     def process_item(self, item, spider):
-        print 'md5 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         str = item['url']
         if item['retweet']:
             if item['retweet']['url']:

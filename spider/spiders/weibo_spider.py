@@ -1,6 +1,7 @@
 #coding=utf8
 import scrapy
 import requests
+import urllib
 from scrapy.http import Request
 from spider.sina.weibo import weibo
 from spider.items import TweetItem
@@ -13,6 +14,7 @@ class WeiboSpider(scrapy.Spider):
     def __init__(self, name, password, *args, **kwargs):
         self.weibo = weibo(name, password)
         self.session = self.weibo.login()
+        self.keywords = [u'柯震东', u'郭碧婷'] 
         cookiejar = requests.utils.dict_from_cookiejar(self.session.cookies)
 
         self.cookie = {'ALF': cookiejar['ALF'],
@@ -25,8 +27,9 @@ class WeiboSpider(scrapy.Spider):
         print self.cookie
         
     def start_requests(self):
-        home_url = 'http://s.weibo.com/weibo/%25E6%259F%25AF%25E9%259C%2587%25E4%25B8%259C&Refer=STopic_top'
-        yield Request(url=home_url, cookies=self.cookie, callback=self._parse, errback=self._parse_fail)
+        for k in self.keywords:
+            url = u"http://s.weibo.com/weibo/%s?topnav=1&wvr=6&topsug=1" % (urllib.quote_plus(k.encode('utf-8')))
+            yield Request(url=url, cookies=self.cookie, callback=self._parse, errback=self._parse_fail)
 
     def _parse(self, response):
         tweets,hrefs = parser.parse_html(response.body)
