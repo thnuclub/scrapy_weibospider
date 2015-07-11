@@ -12,6 +12,7 @@ class WeiboSpiderRedis(RedisSpider):
     redis_key = 'weibospider:start_urls'
 
     def __init__(self, name, password, *args, **kwargs):
+        self.start_urls = []
         self.weibo = weibo(name, password)
         self.session = self.weibo.login()
         super(WeiboSpiderRedis, self).__init__(*args, **kwargs)
