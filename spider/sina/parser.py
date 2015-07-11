@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import time
 import urlparse
 import urllib
+from scrapy import log
 
 format = '%Y-%m-%d %H:%M:%S'
 
@@ -93,23 +94,23 @@ def parse_html(text):
                 if html.find('<div class="search_noresult">') > 0:
                     hasMore = False
                 else:
-                    soup = BeautifulSoup(html)
+                    soup = BeautifulSoup(html, 'lxml')
                     dls = soup.find_all('div', attrs={'class': 'feed_list'})
                     for dl in dls:
                         try:
                             tweet = get_tweet(dl)
                             tweet['retweet'] = get_retweet(dl)
                             tweets.append(tweet)
-                        except Exception , e:
-                            print 'parse tweet error', e
+                        except:
+                            log.msg('parse tweet error', log.INFO)
                     href = get_nextpage(soup)
                     if href:
                         next_hrefs.append(href)
     if isCaught:
-        print '被新浪识别为机器人,请手动登陆账号检查!'
+        log.msg('被新浪识别为机器人,请手动登陆账号检查!', log.INFO)
         return [], []
     if not hasMore:
-        print 'Not More Results'
+        log.msg('Not More Results', log.INFO)
         return [], []
     return tweets, next_hrefs
 

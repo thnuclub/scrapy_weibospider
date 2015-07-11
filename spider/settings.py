@@ -22,18 +22,16 @@ ITEM_PIPELINES = {
 # ES configuration
 ES_HOST = "localhost:9200"
 
-#USER_AGENT = 'spider (+http://www.yourdomain.com)'
-
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS=32
+CONCURRENT_REQUESTS=2
+
+LOG_LEVEL = 'INFO'
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY=10
+DOWNLOAD_DELAY=20
 TIME_DELTA = 30
-# how many feeds can fetch from a item
-FEED_LIMIT = 300000
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
@@ -44,8 +42,8 @@ REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN=16
-#CONCURRENT_REQUESTS_PER_IP=16
+CONCURRENT_REQUESTS_PER_DOMAIN=2
+CONCURRENT_REQUESTS_PER_IP=2
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED=False
