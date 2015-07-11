@@ -35,7 +35,7 @@ class WeiboSpiderRedis(RedisSpider):
             item = tweet
             yield item
         for href in hrefs:
-            yield Request(url=href, cookies=self.cookie, callback=self._parse, errback=self._parse_fail)
+            yield Request(url=href, cookies=self.cookie, callback=self.parse, errback=self.parse_fail)
 
     def parse_fail(self, response):
         log.err("Fail to parse the http response file.")
