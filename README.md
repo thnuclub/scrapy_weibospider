@@ -1,12 +1,12 @@
 # scrapy_weibospider
-scrapy weibo spider
+scrapy weibo spider(基于scrapy-redis的分布式)
 
 ## Usage
 
 ```
 scrapy crawl weibospider -a name=username -a password=pwd
 
-scrapy runspider weibospider_redis.py -a name=username -a password=pwd
+scrapy runspider weibospider_redis.py -a name=username -a password=pwd (client)
 
 ```
 
