@@ -6,6 +6,7 @@ from scrapy import signals
 from scrapy.http import Request
 from spider.sina.weibo import weibo
 from spider.items import TweetItem
+from scrapy.exceptions import DontCloseSpider
 import spider.sina.parser as parser
 from scrapy import log
 import time
@@ -34,6 +35,10 @@ class WeiboSpider(scrapy.Spider):
     def setup_redis(self):
         self.redis_client = redis.StrictRedis(host='localhost', port=6379)
         self.crawler.signals.connect(self._on_idle, signal=signals.spider_idle)
+        self.crawler.signals.connect(self.item_scraped, signal=signals.item_scraped)
+
+    def item_scraped(self, *args, **kwargs):
+        self._on_idle()
 
     def _on_idle(self, spider):
         for i in range(0, 10):
@@ -43,7 +48,7 @@ class WeiboSpider(scrapy.Spider):
               self.crawler.engine.crawl(Request(url=url, cookies=self.cookie, callback=self._parse, errback=self._parse_fail), spider=self)
             else:
               break
-        self.crawler.signals.connect(self._on_idle, signal=signals.spider_idle)
+        raise DontCloseSpider
 
     def start_requests(self):
         utctime = int(time.time())
