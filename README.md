@@ -1,12 +1,12 @@
 # scrapy_weibospider
-scrapy weibo spider
+scrapy weibo spider(基于scrapy-redis的分布式,由于抓取是带状态的，所以目前多机会有问题，目前猜测scrapy-redis不适合抓取需登录的网站)
 
 ## Usage
 
 ```
 scrapy crawl weibospider -a name=username -a password=pwd
 
-scrapy runspider weibospider_redis.py -a name=username -a password=pwd
+scrapy runspider weibospider_redis.py -a name=username -a password=pwd (client)
 
 ```
 
