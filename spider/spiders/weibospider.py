@@ -40,7 +40,7 @@ class WeiboSpider(scrapy.Spider):
     def item_scraped(self, *args, **kwargs):
         self._on_idle()
 
-    def _on_idle(self, spider):
+    def _on_idle(self):
         for i in range(0, 10):
             url = self.redis_client.lpop("weibospider:urls")
             log.msg('from redis.list read %s' % url, log.INFO)
