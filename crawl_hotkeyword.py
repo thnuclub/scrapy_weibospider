@@ -10,7 +10,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 redisClient=redis.StrictRedis(host='127.0.0.1',port=6379)
-redis_key = 'weibospider:start_urls'
+redis_key = 'weibospider:urls'
 
 def get_html_and_parse():
     url = u'http://s.weibo.com/top/summary?cate=realtimehot'
