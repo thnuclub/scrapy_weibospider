@@ -19,7 +19,7 @@ class WeiboSpider(scrapy.Spider):
         self.session = self.weibo.login()
         cookiejar = requests.utils.dict_from_cookiejar(self.session.cookies)
 
-        self.cookie = {'ALF': cookiejar['ALF'],
+        self.cookie = {
                        'SUB': cookiejar['SUB'],
                        'SUBP': cookiejar['SUBP'],
                        'SUE': cookiejar['SUE'],
